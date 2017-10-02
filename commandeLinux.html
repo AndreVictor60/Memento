@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Mennento - Commande Linux</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+  <header >
+  <div id="bloc-page">
+  <img src="img/ubuntu.png" alt="ubuntu" id="logo"/>
+  <h1>Mennento</h1>
+  	<nav>
+  		<ul>
+			<li><a href="index.html">Acceuil</a></li>
+			<li><a href="commandeLinux.html">Commande Linux</a></li>
+			<li><a href="HTML.html">HTML</a></li>
+			<li><a href="PHP.html">PHP</a></li>
+			<li><a href="CSS.html">CSS</a></li>
+		</ul>
+	</nav>
+  </header>
+  </div>
+  		<br />
+		<br />
+  				<h2> Les commandes de base de linux : </h2>
+		<br />
+		<br />
+  <div>
+  	<table border="1" cellpadding="10" width="100%">
+		<tr>
+			<th>Balise</th>
+			<th>Discription</th>
+			<th>Options</th>
+		</tr>
+		<tr>
+			<td>ls</td>
+			<td>Permet de lister un répertoire</td>
+			<td>-p : Crée les répertoires parents s'ils n'existent pas</td>
+		</tr>
+		<tr>
+			<td>cd</td>
+			<td>Permet de se promener dans les répertoires</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>mv</td>
+			<td>Permet de déplacer ou renommer des fichiers et des répertoires</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>cp</td>
+			<td>Permet de copier des fichiers ou des répertoires</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>rm</td>
+			<td>Permet d'effacer des fichiers</td>
+			<td>   -i : Demande confirmation avant d'effacer<br />   -f : Ne demande pas de confirmation avant d'effacer<br />   -r : Efface récursivement. Ce mot signifie "y compris ses sous-répertoires et leur contenu".</td>
+		</tr>
+		<tr>
+			<td>mkdir</td>
+			<td>Crée le répertoire</td>
+			<td>-p : Crée les répertoires parents s'ils n'existent pas</td>
+		</tr>
+		<tr>
+			<td>pwd</td>
+			<td>Affiche le répertoire de travail</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>sudo</td>
+			<td>Permet d'exécuter des commandes en tant qu'un root</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>apt</td>
+			<td>Permet l'​installation et la désinstallation ​de paquets</td>
+			<td> update : Met à jour la liste des paquets disponibles en fonction des sources fournies.<br /> upgrade : Met à jour tous les paquets déjà installés.<br /> install : Installe un ou plusieurs paquets.</td>
+		</tr>
+		<tr>
+			<td>touch</td>
+			<td>Créer un fichier vide</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>a2ensite</td>
+			<td>Créer un lien symbolique</td>
+			<td>a2dissite : Apache2 Disable Site<br />a2ensite : Apache2 Enable Site </td>
+		</tr>
+	</table>
+  </div>
+    	<br />
+		<br />
+  				<h2> Création d'un VHOST : </h2>
+		<br />
+		<br />
+		<p>
+		Pour la création du Vhost, il faut configurer Apache. Toutes les commandes suivantes seront à faire en super utilisateur.<br />
+<br />
+		   <xmp> sudo -s</xmp><br />
+<br />
+		Ensuite on va se rendre dans le dossier des Vhost d'Apache :<br />
+<br />
+		    <xmp>cd /etc/apache2/sites-available/</xmp><br />
+<br />
+			Nous allons maintenant créer un nouveau fichier de configuration avec l'éditeur Nano :<br />
+<br />
+		    <xmp>nano monProjet.conf</xmp><br />
+
+		Dans Nano coller ce code :<br />
+<xmp>
+<VirtualHost *:80>
+	ServerAdmin webmaster@monProjet
+	ServerName www.monProjet
+	ServerAlias monProjet
+	DocumentRoot /home/nom_utilisateur/www/monProjet
+<Directory /home/nom_utilisateur/www/monProjet/><
+	AllowOverride All
+	Require all granted
+</Directory>
+	ErrorLog /var/log/apache2/monProjet-error.log
+	LogLevel warn<
+	CustomLog  /var/log/apache2/monProjet-access.log combined
+	ServerSignature Off
+</VirtualHost>
+</xmp>
+<br />
+		Important : Pensez bien à modifier nom_utilisateur par votre nom d'utilisateur. Cette configuration est minimal. Elle n'est pas à reproduire en production.
+		Sauvegardez puis activez ce nouveau Vhost :<br />
+<br />
+		    <xmp>a2ensite monProjet.conf</xmp><br />
+
+<br />
+		Relancez la configuration d'Apache :<br />
+<br />
+		    <xmp>systemctl reload apache2</xmp><br />
+<br />
+		</p>
+
+	</body>
+</html>
